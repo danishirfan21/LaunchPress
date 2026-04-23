@@ -35,7 +35,6 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
 
     if (!response.ok) {
-      // Handle "Member Exists" error gracefully
       if (data.title === "Member Exists") {
         return NextResponse.json({
           success: true,
@@ -50,8 +49,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ success: true, data });
-  } catch (error) {
-    console.error("Mailchimp subscription error:", error);
+  } catch {
     return NextResponse.json(
       { error: "Something went wrong while subscribing." },
       { status: 500 }

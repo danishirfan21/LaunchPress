@@ -1,24 +1,24 @@
 # LaunchPress — CMS & Marketing Starter
 
-A modern, high-performance marketing site starter built with **Next.js**, **Storyblok**, **Mailchimp**, and **Stripe**.
+A high-performance marketing site starter built with **Next.js**, **Storyblok**, **Mailchimp**, and **Stripe**.
 
 ## 🚀 Overview
 
-This repository demonstrates a production-credible architecture for marketing landing pages. It focuses on the coexistence of modern frameworks with essential third-party integrations and legacy system support.
+LaunchPress demonstrates a production-credible architecture for marketing landing pages. It focuses on the coexistence of modern frameworks with essential third-party integrations and legacy system support.
 
 ### Key Features
-- **CMS-Driven Pages**: Fully dynamic content rendering via **Storyblok** with robust fallback states.
-- **Legacy Integration**: A **jQuery-based** newsletter widget embedded safely using `next/script`, demonstrating modern-legacy coexistence.
-- **Marketing Automation**: **Mailchimp** API integration with duplicate-member handling and validation.
-- **Payment Flow**: **Stripe Checkout** integration tied to plan-specific Price IDs from the CMS.
-- **Premium UX**: Polished UI built with **Tailwind CSS**, featuring custom loading states, inline error handling, and accessible forms.
+- **Headless CMS**: Dynamic content rendering via **Storyblok** with graceful fallback states.
+- **Legacy Support**: A **jQuery-based** newsletter widget integrated safely using `next/script`.
+- **Marketing Integration**: **Mailchimp** API support with custom validation and duplicate-member handling.
+- **Stripe Checkout**: End-to-end payment flow tied to plan-specific Price IDs managed in the CMS.
+- **Modern Stack**: Built with **Next.js 16**, **TypeScript**, and **Tailwind CSS 4**.
 
 ## 🛠️ Tech Stack
-- **Frontend**: Next.js 15 (App Router), TypeScript, Tailwind CSS
-- **CMS**: Storyblok (Headless)
+- **Frontend**: Next.js 16 (App Router), TypeScript, Tailwind CSS 4
+- **CMS**: Storyblok
 - **Payments**: Stripe Checkout
 - **Marketing**: Mailchimp Marketing API
-- **Legacy**: jQuery 3.7.1 (Simulated)
+- **Legacy**: jQuery 3.7.1 (Integrated via Script strategy)
 
 ## 🚦 Getting Started
 
@@ -54,11 +54,11 @@ This repository demonstrates a production-credible architecture for marketing la
 
 ## 🎤 Interview Talking Points
 
-- **Headless CMS Strategy**: "I implemented Storyblok with a version-switching logic (Draft vs. Published) and created a custom fallback system so the site remains functional even if the CMS is unreachable."
-- **Handling Legacy Code**: "The project includes a jQuery newsletter widget. Instead of refactoring it into React, I demonstrated how to integrate it safely using the `Next/Script` strategy to ensure it doesn't block the main thread."
-- **Functional Stripe Integration**: "The pricing section is dynamic. It pulls Price IDs directly from Storyblok, allowing the marketing team to swap products or change pricing without a code deployment."
-- **API Reliability**: "I added custom error handling for the Mailchimp integration to gracefully handle users who are already on the list, improving the user experience over standard API failure messages."
+- **Modern-Legacy Coexistence**: "I integrated a legacy jQuery widget into a modern Next.js 16 environment using the `next/script` component, ensuring legacy scripts load without blocking the main thread or interfering with React's lifecycle."
+- **Headless CMS Resilience**: "The Storyblok integration handles draft/published versioning and includes a fallback UI system to maintain professional appearance even if the API is unreachable or content is missing."
+- **Schema-Driven Payments**: "The Stripe integration is data-driven; Price IDs are passed from the CMS to the API route, allowing non-technical teams to update products and pricing without a code deployment."
+- **API Optimization**: "The Mailchimp integration includes server-side validation and specific error mapping to handle edge cases like duplicate subscriptions gracefully."
 
 ---
 
-*Note: This project is intended as a portfolio piece. Real API credentials and Storyblok content setup are required for full functionality.*
+*Note: This project is a portfolio piece. Real API credentials and Storyblok content setup are required for full functionality.*

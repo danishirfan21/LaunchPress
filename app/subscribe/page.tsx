@@ -39,7 +39,7 @@ export default function SubscribePage() {
           message: data.error || "Subscription failed. Please try again.",
         });
       }
-    } catch (error) {
+    } catch (err) {
       setStatus({
         type: "error",
         message: "An unexpected error occurred. Please check your connection.",
@@ -89,10 +89,10 @@ export default function SubscribePage() {
           <div
             id="status-message"
             role="alert"
-            className={`mt-6 p-4 rounded-xl text-sm font-medium animate-in fade-in zoom-in-95 duration-300 ${
+            className={`mt-6 p-4 rounded-xl text-sm font-medium animate-in fade-in zoom-in-95 duration-300 border ${
               status.type === "success"
-                ? "bg-green-50 text-green-800 border border-green-100"
-                : "bg-red-50 text-red-800 border border-red-100"
+                ? "bg-green-50 text-green-800 border-green-100"
+                : "bg-red-50 text-red-800 border-red-100"
             }`}
           >
             {status.message}
@@ -100,7 +100,7 @@ export default function SubscribePage() {
         ) : null}
 
         <p className="mt-8 text-center text-xs text-gray-400">
-          <Link href="/" className="hover:text-gray-600 underline underline-offset-4">Back to home</Link>
+          <Link href="/" className="hover:text-gray-600 underline underline-offset-4 decoration-gray-300">Back to home</Link>
         </p>
       </div>
     </main>

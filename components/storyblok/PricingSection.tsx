@@ -47,8 +47,7 @@ export default function PricingSection({ blok }: PricingSectionProps) {
       } else {
         setError({ id: plan._uid, message: data.error || "Unable to start checkout." });
       }
-    } catch (err) {
-      console.error("Checkout error:", err);
+    } catch {
       setError({ id: plan._uid, message: "Network error. Please try again." });
     } finally {
       setLoading(null);

@@ -11,11 +11,11 @@ export default function StoryblokFallback({ slug, title }: StoryblokFallbackProp
       <div className="max-w-md mx-auto">
         <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
         <p className="mt-4 text-gray-600 leading-relaxed">
-          It looks like the content for <code className="bg-gray-100 px-1 rounded">"{slug}"</code> hasn't been published in Storyblok yet, or the API token is invalid.
+          This section is currently being updated. Please check back soon or ensure your Storyblok content for <code className="bg-gray-100 px-1 rounded">"{slug}"</code> is correctly published.
         </p>
         <div className="mt-8 p-6 bg-blue-50 rounded-2xl border border-blue-100 text-blue-800 text-sm text-left">
-          <p className="font-semibold mb-2">Portfolio Note:</p>
-          <p>This fallback UI demonstrates robust error handling for headless CMS integrations. In a production environment, this might trigger a revalidation or display cached content.</p>
+          <p className="font-semibold mb-1 text-blue-900">System Status:</p>
+          <p>The application is connected, but the requested CMS entry is either in draft or missing an authorization token. This fallback ensures the site remains accessible and professional during content updates.</p>
         </div>
       </div>
       <LegacyNewsletterWidget />
