@@ -5,8 +5,14 @@ import FeatureGrid from "@/components/storyblok/FeatureGrid";
 import PricingSection from "@/components/storyblok/PricingSection";
 import RichTextBlock from "@/components/storyblok/RichTextBlock";
 
+const accessToken = process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN;
+
+if (!accessToken) {
+  console.warn("Missing NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN");
+}
+
 storyblokInit({
-  accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
+  accessToken,
   use: [apiPlugin],
   components: {
     hero: Hero,
@@ -19,8 +25,12 @@ storyblokInit({
 export async function fetchStoryblokStory(slug: string) {
   const storyblokApi = getStoryblokApi();
 
+  if (!storyblokApi) {
+    throw new Error("Storyblok API not initialized");
+  }
+
   const response = await storyblokApi.get(`cdn/stories/${slug}`, {
-    version: "draft",
+    version: process.env.NODE_ENV === "development" ? "draft" : "published",
   });
 
   return response.data.story;
