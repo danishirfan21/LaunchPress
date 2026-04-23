@@ -19,12 +19,14 @@ type PricingSectionProps = {
 
 export default function PricingSection({ blok }: PricingSectionProps) {
   const [loading, setLoading] = useState<string | null>(null);
+  const [error, setError] = useState<{ id: string; message: string } | null>(null);
 
   const handleCheckout = async (plan: PricingPlan) => {
+    setError(null);
     const priceId = plan.price_id || process.env.NEXT_PUBLIC_STRIPE_PRICE_ID;
 
     if (!priceId) {
-      alert("No Price ID found for this plan.");
+      setError({ id: plan._uid, message: "Checkout unavailable: Missing Price ID." });
       return;
     }
 
@@ -43,11 +45,11 @@ export default function PricingSection({ blok }: PricingSectionProps) {
       if (data.url) {
         window.location.href = data.url;
       } else {
-        alert(data.error || "Failed to create checkout session");
+        setError({ id: plan._uid, message: data.error || "Unable to start checkout." });
       }
-    } catch (error) {
-      console.error("Checkout error:", error);
-      alert("Something went wrong");
+    } catch (err) {
+      console.error("Checkout error:", err);
+      setError({ id: plan._uid, message: "Network error. Please try again." });
     } finally {
       setLoading(null);
     }
@@ -56,21 +58,30 @@ export default function PricingSection({ blok }: PricingSectionProps) {
   return (
     <section className="px-6 py-16">
       <div className="mx-auto max-w-6xl">
-        <h2 className="text-3xl font-semibold">{blok.heading}</h2>
+        <h2 className="text-3xl font-semibold tracking-tight">{blok.heading}</h2>
 
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           {blok.plans?.map((plan) => (
-            <div key={plan._uid} className="rounded-2xl border p-6">
+            <div key={plan._uid} className="flex flex-col rounded-2xl border p-6 bg-white shadow-sm transition-shadow hover:shadow-md">
               <h3 className="text-xl font-semibold">{plan.name}</h3>
               <p className="mt-2 text-3xl font-bold">{plan.price}</p>
-              <p className="mt-3 text-gray-600">{plan.description}</p>
-              <button
-                onClick={() => handleCheckout(plan)}
-                disabled={loading === plan._uid}
-                className="mt-6 w-full rounded-xl bg-black px-5 py-2 text-white disabled:bg-gray-400"
-              >
-                {loading === plan._uid ? "Processing..." : "Choose plan"}
-              </button>
+              <p className="mt-3 text-gray-600 flex-grow">{plan.description}</p>
+
+              <div className="mt-6">
+                <button
+                  onClick={() => handleCheckout(plan)}
+                  disabled={!!loading}
+                  className="w-full rounded-xl bg-black px-5 py-3 text-white font-medium transition-all hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed"
+                >
+                  {loading === plan._uid ? "Processing..." : "Choose plan"}
+                </button>
+
+                {error?.id === plan._uid && (
+                  <p className="mt-3 text-sm text-red-600 font-medium animate-in fade-in slide-in-from-top-1">
+                    {error.message}
+                  </p>
+                )}
+              </div>
             </div>
           ))}
         </div>

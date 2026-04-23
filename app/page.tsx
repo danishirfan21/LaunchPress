@@ -2,6 +2,7 @@ import "@/lib/storyblok";
 import { fetchStoryblokStory } from "@/lib/storyblok";
 import { StoryblokComponent } from "@storyblok/react";
 import LegacyNewsletterWidget from "@/components/LegacyNewsletterWidget";
+import StoryblokFallback from "@/components/storyblok/StoryblokFallback";
 
 export default async function HomePage() {
   try {
@@ -16,13 +17,6 @@ export default async function HomePage() {
       </main>
     );
   } catch (error) {
-    console.error("Error fetching home story:", error);
-    return (
-      <main className="p-20 text-center">
-        <h1 className="text-2xl font-bold">Welcome to LaunchPress</h1>
-        <p className="mt-4 text-gray-600">Please set up your Storyblok content for the "home" slug.</p>
-        <LegacyNewsletterWidget />
-      </main>
-    );
+    return <StoryblokFallback slug="home" title="Welcome to LaunchPress" />;
   }
 }

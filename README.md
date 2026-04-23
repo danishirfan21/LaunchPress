@@ -1,50 +1,64 @@
-# LaunchPress - CMS & Marketing Starter
+# LaunchPress — CMS & Marketing Starter
 
-A modern, high-performance marketing site starter built with Next.js, Storyblok, and Stripe.
+A modern, high-performance marketing site starter built with **Next.js**, **Storyblok**, **Mailchimp**, and **Stripe**.
 
-## Features
+## 🚀 Overview
 
-- **CMS-driven content rendering** with Storyblok.
-- **Legacy widget support** using jQuery inside a modern Next.js app.
-- **Mailchimp marketing list integration** for newsletter subscriptions.
-- **Stripe checkout flow** for campaign landing pages and products.
-- **SEO-friendly** page rendering with dynamic content and Next.js App Router.
-- **Tailwind CSS** for rapid, responsive styling.
+This repository demonstrates a production-credible architecture for marketing landing pages. It focuses on the coexistence of modern frameworks with essential third-party integrations and legacy system support.
 
-## Tech Stack
+### Key Features
+- **CMS-Driven Pages**: Fully dynamic content rendering via **Storyblok** with robust fallback states.
+- **Legacy Integration**: A **jQuery-based** newsletter widget embedded safely using `next/script`, demonstrating modern-legacy coexistence.
+- **Marketing Automation**: **Mailchimp** API integration with duplicate-member handling and validation.
+- **Payment Flow**: **Stripe Checkout** integration tied to plan-specific Price IDs from the CMS.
+- **Premium UX**: Polished UI built with **Tailwind CSS**, featuring custom loading states, inline error handling, and accessible forms.
 
-- **Frontend:** Next.js (App Router), TypeScript, Tailwind CSS
-- **CMS:** Storyblok
-- **Legacy Layer:** jQuery (simulating legacy integration)
-- **Marketing:** Mailchimp API
-- **Payments:** Stripe Checkout
+## 🛠️ Tech Stack
+- **Frontend**: Next.js 15 (App Router), TypeScript, Tailwind CSS
+- **CMS**: Storyblok (Headless)
+- **Payments**: Stripe Checkout
+- **Marketing**: Mailchimp Marketing API
+- **Legacy**: jQuery 3.7.1 (Simulated)
 
-## Getting Started
+## 🚦 Getting Started
 
-1.  **Clone the repository.**
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
-3.  **Set up environment variables:**
-    Copy `.env.local.example` (or use the provided placeholders) to `.env.local` and fill in your API keys.
-    ```bash
-    NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN=your_storyblok_preview_token
-    MAILCHIMP_API_KEY=your_mailchimp_api_key
-    MAILCHIMP_AUDIENCE_ID=your_mailchimp_audience_id
-    MAILCHIMP_SERVER_PREFIX=us21
-    STRIPE_SECRET_KEY=your_stripe_secret_key
-    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
-    STRIPE_PRICE_ID=your_stripe_price_id
-    NEXT_PUBLIC_BASE_URL=http://localhost:3000
-    ```
-4.  **Run the development server:**
-    ```bash
-    npm run dev
-    ```
+1. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
 
-## Interview Talking Points
+2. **Environment Setup**:
+   Create a `.env.local` file with the following keys:
+   ```bash
+   # Storyblok
+   NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN=your_preview_token
 
-- **Modern & Legacy Coexistence:** Demonstrated how to safely integrate legacy jQuery-based widgets into a modern React/Next.js environment using the `Next/Script` component and isolated styling.
-- **CMS Architecture:** Decoupled content from code using Storyblok, allowing non-technical users to manage landing pages.
-- **Full-Stack Integration:** Implemented end-to-end flows for marketing (Mailchimp) and payments (Stripe) using Next.js API routes.
+   # Mailchimp
+   MAILCHIMP_API_KEY=your_api_key
+   MAILCHIMP_AUDIENCE_ID=your_list_id
+   MAILCHIMP_SERVER_PREFIX=us21
+
+   # Stripe
+   STRIPE_SECRET_KEY=your_secret_key
+   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_pub_key
+   STRIPE_PRICE_ID=default_fallback_price_id
+
+   # General
+   NEXT_PUBLIC_BASE_URL=http://localhost:3000
+   ```
+
+3. **Development**:
+   ```bash
+   npm run dev
+   ```
+
+## 🎤 Interview Talking Points
+
+- **Headless CMS Strategy**: "I implemented Storyblok with a version-switching logic (Draft vs. Published) and created a custom fallback system so the site remains functional even if the CMS is unreachable."
+- **Handling Legacy Code**: "The project includes a jQuery newsletter widget. Instead of refactoring it into React, I demonstrated how to integrate it safely using the `Next/Script` strategy to ensure it doesn't block the main thread."
+- **Functional Stripe Integration**: "The pricing section is dynamic. It pulls Price IDs directly from Storyblok, allowing the marketing team to swap products or change pricing without a code deployment."
+- **API Reliability**: "I added custom error handling for the Mailchimp integration to gracefully handle users who are already on the list, improving the user experience over standard API failure messages."
+
+---
+
+*Note: This project is intended as a portfolio piece. Real API credentials and Storyblok content setup are required for full functionality.*

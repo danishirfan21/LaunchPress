@@ -2,6 +2,7 @@ import "@/lib/storyblok";
 import { fetchStoryblokStory } from "@/lib/storyblok";
 import { StoryblokComponent } from "@storyblok/react";
 import LegacyNewsletterWidget from "@/components/LegacyNewsletterWidget";
+import StoryblokFallback from "@/components/storyblok/StoryblokFallback";
 
 export default async function PricingPage() {
   try {
@@ -16,13 +17,6 @@ export default async function PricingPage() {
       </main>
     );
   } catch (error) {
-    console.error("Error fetching pricing story:", error);
-    return (
-      <main className="p-20 text-center">
-        <h1 className="text-2xl font-bold">Pricing Plans</h1>
-        <p className="mt-4 text-gray-600">Please set up your Storyblok content for the "pricing" slug.</p>
-        <LegacyNewsletterWidget />
-      </main>
-    );
+    return <StoryblokFallback slug="pricing" title="Pricing Plans" />;
   }
 }

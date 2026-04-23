@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import LegacyNewsletterWidget from "@/components/LegacyNewsletterWidget";
 
 type Props = {
+  // In Next.js 15, params is a Promise that must be awaited.
   params: Promise<{ slug: string }>;
 };
 
@@ -22,7 +23,8 @@ export default async function BlogPostPage({ params }: Props) {
         <LegacyNewsletterWidget />
       </main>
     );
-  } catch {
+  } catch (error) {
+    // If we can't find the blog post, we return a 404
     notFound();
   }
 }
