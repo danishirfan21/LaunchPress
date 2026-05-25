@@ -62,3 +62,4 @@ LaunchPress demonstrates a production-credible architecture for marketing landin
 ---
 
 *Note: This project is a portfolio piece. Real API credentials and Storyblok content setup are required for full functionality.*
+
