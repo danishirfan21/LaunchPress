@@ -23,12 +23,7 @@ export default function PricingSection({ blok }: PricingSectionProps) {
 
   const handleCheckout = async (plan: PricingPlan) => {
     setError(null);
-    const priceId = plan.price_id || process.env.NEXT_PUBLIC_STRIPE_PRICE_ID;
-
-    if (!priceId) {
-      setError({ id: plan._uid, message: "Checkout unavailable: Missing Price ID." });
-      return;
-    }
+    const priceId = plan.price_id;
 
     setLoading(plan._uid);
     try {
@@ -43,7 +38,7 @@ export default function PricingSection({ blok }: PricingSectionProps) {
       const data = await response.json();
 
       if (data.url) {
-        window.location.href = data.url;
+        window.location.assign(data.url);
       } else {
         setError({ id: plan._uid, message: data.error || "Unable to start checkout." });
       }

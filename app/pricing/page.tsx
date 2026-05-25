@@ -5,18 +5,18 @@ import LegacyNewsletterWidget from "@/components/LegacyNewsletterWidget";
 import StoryblokFallback from "@/components/storyblok/StoryblokFallback";
 
 export default async function PricingPage() {
-  try {
-    const story = await fetchStoryblokStory("pricing");
+  const story = await fetchStoryblokStory("pricing").catch(() => null);
 
-    return (
-      <main>
-        {story.content.body?.map((blok: { _uid: string; component: string }) => (
-          <StoryblokComponent blok={blok} key={blok._uid} />
-        ))}
-        <LegacyNewsletterWidget />
-      </main>
-    );
-  } catch (error) {
+  if (!story) {
     return <StoryblokFallback slug="pricing" title="Pricing Plans" />;
   }
+
+  return (
+    <main>
+      {story.content.body?.map((blok: { _uid: string; component: string }) => (
+        <StoryblokComponent blok={blok} key={blok._uid} />
+      ))}
+      <LegacyNewsletterWidget />
+    </main>
+  );
 }

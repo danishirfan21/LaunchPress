@@ -1,29 +1,39 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
 export async function POST(request: Request) {
   try {
     const { priceId } = await request.json();
+    const checkoutPriceId = priceId || process.env.STRIPE_PRICE_ID;
+    const secretKey = process.env.STRIPE_SECRET_KEY;
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 
-    if (!priceId) {
+    if (!checkoutPriceId) {
       return NextResponse.json(
-        { error: "Missing priceId" },
+        { error: "Missing priceId or STRIPE_PRICE_ID." },
         { status: 400 }
       );
     }
+
+    if (!secretKey) {
+      return NextResponse.json(
+        { error: "Checkout unavailable: missing STRIPE_SECRET_KEY." },
+        { status: 503 }
+      );
+    }
+
+    const stripe = new Stripe(secretKey);
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: [
         {
-          price: priceId,
+          price: checkoutPriceId,
           quantity: 1,
         },
       ],
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/thank-you`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/pricing`,
+      success_url: `${baseUrl}/thank-you`,
+      cancel_url: `${baseUrl}/pricing`,
     });
 
     return NextResponse.json({ url: session.url });

@@ -39,7 +39,7 @@ export default function SubscribePage() {
           message: data.error || "Subscription failed. Please try again.",
         });
       }
-    } catch (err) {
+    } catch {
       setStatus({
         type: "error",
         message: "An unexpected error occurred. Please check your connection.",

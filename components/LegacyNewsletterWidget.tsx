@@ -9,7 +9,7 @@ export default function LegacyNewsletterWidget() {
       {/* Loading jQuery 3.7.1 from the local public folder to simulate a legacy dependency */}
       <Script
         src="/legacy/jquery.min.js"
-        strategy="beforeInteractive"
+        strategy="afterInteractive"
       />
       {/* The actual widget behavior script that relies on jQuery */}
       <Script

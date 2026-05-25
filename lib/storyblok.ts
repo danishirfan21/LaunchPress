@@ -7,13 +7,9 @@ import RichTextBlock from "@/components/storyblok/RichTextBlock";
 
 const accessToken = process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN;
 
-if (!accessToken) {
-  console.warn("Missing NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN");
-}
-
 storyblokInit({
   accessToken,
-  use: [apiPlugin],
+  use: accessToken ? [apiPlugin] : [],
   components: {
     hero: Hero,
     feature_grid: FeatureGrid,
@@ -23,6 +19,10 @@ storyblokInit({
 });
 
 export async function fetchStoryblokStory(slug: string) {
+  if (!accessToken) {
+    throw new Error("Missing NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN");
+  }
+
   const storyblokApi = getStoryblokApi();
 
   if (!storyblokApi) {

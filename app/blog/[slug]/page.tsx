@@ -11,20 +11,19 @@ type Props = {
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
+  const story = await fetchStoryblokStory(`blog/${slug}`).catch(() => null);
 
-  try {
-    const story = await fetchStoryblokStory(`blog/${slug}`);
-
-    return (
-      <main>
-        {story.content.body?.map((blok: { _uid: string; component: string }) => (
-          <StoryblokComponent blok={blok} key={blok._uid} />
-        ))}
-        <LegacyNewsletterWidget />
-      </main>
-    );
-  } catch (error) {
+  if (!story) {
     // If we can't find the blog post, we return a 404
     notFound();
   }
+
+  return (
+    <main>
+      {story.content.body?.map((blok: { _uid: string; component: string }) => (
+        <StoryblokComponent blok={blok} key={blok._uid} />
+      ))}
+      <LegacyNewsletterWidget />
+    </main>
+  );
 }

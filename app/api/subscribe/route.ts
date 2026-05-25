@@ -13,9 +13,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const apiKey = process.env.MAILCHIMP_API_KEY!;
-    const audienceId = process.env.MAILCHIMP_AUDIENCE_ID!;
-    const serverPrefix = process.env.MAILCHIMP_SERVER_PREFIX!;
+    const apiKey = process.env.MAILCHIMP_API_KEY;
+    const audienceId = process.env.MAILCHIMP_AUDIENCE_ID;
+    const serverPrefix = process.env.MAILCHIMP_SERVER_PREFIX;
+
+    if (!apiKey || !audienceId || !serverPrefix) {
+      return NextResponse.json(
+        { error: "Newsletter unavailable: missing Mailchimp configuration." },
+        { status: 503 }
+      );
+    }
 
     const response = await fetch(
       `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${audienceId}/members`,
@@ -38,7 +45,7 @@ export async function POST(request: NextRequest) {
       if (data.title === "Member Exists") {
         return NextResponse.json({
           success: true,
-          message: "You are already subscribed!"
+          message: "You are already subscribed!",
         });
       }
 
